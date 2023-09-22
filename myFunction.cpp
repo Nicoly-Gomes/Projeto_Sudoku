@@ -5,6 +5,8 @@ using namespace std;
 
 
 void formar_matriz(int v[], int t ) {
+    int matriz_principal = [3][3];
+    imt p =0;
     for (int lin = 0; lin < 3; lin++) {
         for(int col =0; col < 3; col++) {
          matriz_principal[lin][col] = v[p];
