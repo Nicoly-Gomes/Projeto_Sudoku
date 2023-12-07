@@ -1,58 +1,13 @@
-#include <algorithm> //para sort
-#include <chrono>
-#include <ctime>
-#include <ctype.h> //para o isdigit
-#include <fstream>
-#include <iostream>
-#include <stdlib.h>
-#include <string> //substr e stoi
-#include <vector>
-using namespace std;
-using namespace std::chrono;
+#include "assi.h"
 
-int tira(const string linha) { // a função que vai tira os números
-  int come = 0;
-  while (
-      come < linha.size() &&
-      !isdigit(linha[come])) { // a seunda condição ver se a atual linha no
-                               // começo tem um numero usando a função isdigit.
-    // A função procura o inicio dos numeros da
-    // string. se nao achar um numero ande
-    come++;
-  }
-  int ter = come;
-  while (ter < linha.size() &&
-         isdigit(
-             linha[ter])) { // a primeira condição verifica se ainda estamos
-                            // dentro do limete de tamanho da string e a segunda
-                            // vai procura o fim da dos números da string
-    // começando de onde come terminou que foi no inicio
-    // do número e ele anda até o fim do número
-    ter++;
-  }
-  if (come < ter) {
-    return stoi(linha.substr(
-        come, ter - come)); // converte a parte de digitos em inteiros com a
-    // funçao stoi que recebe como parametos da função
-    // substr que faz a delimitação dos caracteres a
-    // serem convertidos a delmitaçao começa da posição
-    // inicio que no caso é come e termina em ter
-  } else {
-    return 0;
-  }
-}
 struct sudoku1 {
-  int val_ini, val_new; // a matriz val_ini recebe o valor inicial e val_new
-                        // recebe os valores inseridos pelo jogador
-  int matriz; // matriz recebe a matriz que será mostrada para o jogador já com
-              // os espaços em branco
+  int val_ini, val_new; /a matriz val_ini recebe o valor inicial e val_new recebe os valores inseridos pelo jogador/
+  int matriz; /matriz recebe a matriz que será mostrada para o jogador já com os espaços em branco/
 };
 
 int main() {
 
-  auto começar =
-      steady_clock::now(); // auto para o compilador deduzir o tipo da variavel
-                           // e o steady_clock now pega o tempo agora
+  auto começar = steady_clock::now(); /auto para o compilador deduzir o tipo da variavel e o steady_clock now pega o tempo agora/
 
   srand(time(NULL));
 
@@ -222,15 +177,14 @@ int main() {
   matriz[8][7].matriz = 7;
   matriz[8][8].matriz = 9;
 
-  for (int cont = 0; cont < 3; cont++) {
+  for (int cont = 0; cont < 40; cont++) {
     int linha = rand() % 9;  // gera números aleatórios entre 0 e 8
     int coluna = rand() % 9; // gera números aleatórios entre 0 e 8
-    matriz[linha][coluna].matriz =
-        32; // para a célula sorteada ficar com espaço em branco
+    matriz[linha][coluna].matriz = 32; // para a célula sorteada ficar com espaço em branco
   }
 
   char x, y;
-  string name;
+ string name;
   cout << "                       SUDOKU                       " << endl;
   cout << "Tem conhecimento sobre as regras e o funcionamento do jogo?\n";
   cout << "DIGITE 'S' PARA SIM E 'N' PARA NÃO\n";
@@ -243,7 +197,7 @@ int main() {
     if (!system("clear")) {
     }
     cout << "------------------------REGRAS DO "
-            "JOGO--------------------------------\n";
+      "JOGO--------------------------------\n";
     cout << "A ideia principal do jogo é que o jogador preencha a tabela com "
             "números de 1 a 9, sem que haja quaisquer repetições de números na "
             "mesma linha, coluna e grade.\n";
@@ -259,7 +213,7 @@ int main() {
   getline(cin, name);
   cout << "\nAperte em uma tecla para continuar" << endl;
   cin >> x;
-
+  
   for (int lin = 0; lin < 9; lin++) {
     for (int col = 0; col < 9; col++) {
       if (matriz[lin][col].matriz == 32) {
@@ -280,7 +234,7 @@ int main() {
   }
   int vidas = 3; // quantidade de vidas
   int n;
-  for (n = 3; n > 0 && vidas > 0; n+=0) { // enquanto tiver espaços em branco e vidas, pode jogar
+  for (n = 40; n > 0 && vidas > 0; n+=0) { /enquanto tiver espaços em branco e vidas, pode jogar/
     int linha, coluna;
     int num;
     cout << endl << "digite a linha: " << endl;
@@ -290,8 +244,7 @@ int main() {
     cout << "digite o número que deseja: " << endl;
     cin >> num;
 
-    // para caso o jogador digitar um valor que não está em um espaço em branco
-    // na matriz
+    /para caso o jogador digitar um valor que não está em um espaço em branco a matriz/
 
     while (matriz[linha][coluna].matriz != 32) {
       cout << "\nERRO. DIGITE UM NÚMERO QUE COMPLETE OS ESPAÇOS EM BRANCO"
@@ -306,14 +259,13 @@ int main() {
 
     matriz[linha][coluna].val_new = num; // adiciona o número digitado pelo jogador na matriz
     if (matriz[linha][coluna].val_new == matriz[linha][coluna].val_ini) {
-      // se o número digitado for igual ao número na matriz original, limpe a
-      // tela
+      /se o número digitado for igual ao número na matriz original, limpe a tela/
       if (!system("clear")) {
       }
 
-      matriz[linha][coluna].matriz = num; // o número inserido será adicionado na matriz mostrada na tela
-               // caso o jogador tenha acertado
+      matriz[linha][coluna].matriz = num; /o número inserido será adicionado na matriz mostrada na tela caso o jogador tenha acertado/
       n--;
+      //cout << n;
       cout << "VOCÊ ACERTOU!\n" << endl;
 
       // printando a matriz novamente caso o jogador tenha acertado
@@ -350,9 +302,7 @@ int main() {
     cout << "\nTempo de duração da partida em segundos: " << endl;
     auto acabou = steady_clock::now();
     auto total = acabou - começar; // dá a difereança dos dois tempos
-    int time =
-        duration_cast<seconds>(total)
-            .count(); // comando que converte de nanosegundos para segundos
+    int time = duration_cast<seconds>(total).count(); // comando que converte de nanosegundos para segundos
     cout << time;
 
     ofstream fout;
@@ -372,19 +322,11 @@ int main() {
   }
   sort(arquivolin.begin(), arquivolin.end(), [](string i, string j) {
     return tira(i) < tira(j);
-  }); //[] é o inicio de uma lambada que é uma função anônima que pode ser
-      // definida diretamente no local onde vai precisar dela. ela recebe como
-      // parametro duas strings que terão os valores extraidos pala funão tira e
-      // comparados. Serão strings consecutivas do vector arquivolin que serão
-      // ordenadas
-  // begin se refere ao intervalo de inicio e fim de arquivolin
+  }); /[] é o inicio de uma lambada que é uma função anônima que pode ser definida diretamente no local onde vai precisar dela. ela recebe como parametro duas strings que terão os valores extraidos pala funão tira e comparados. Serão strings consecutivas do vector arquivolin que serão ordenadas begin se refere ao intervalo de inicio e fim de arquivolin/
   ler.close();
   cout << endl;
   cout << "-------------------RANKING-------------------" << endl;
-  for (const auto &ordenadalin :
-       arquivolin) { // fiz passagem por referencia para evitar erros
-    // a variavel é auto para o pc fazer a dedução.Essa variável vai percorrer o
-    // vector arquivolin que já foi ordenado e imprimir as linhas ordenadas
+  for (const auto &ordenadalin : arquivolin) { /fiz passagem por referencia para evitar erros a variavel é auto para o pc fazer a dedução.Essa variável vai percorrer o vector arquivolin que já foi ordenado e imprimir as linhas ordenadas/
     cout << ordenadalin << endl;
   }
 }
